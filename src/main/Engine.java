@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import tiles.TileManager;
+
 /*
  * Author:			Jacob Stewart
  * Project:			Pacman in Java
@@ -35,13 +37,14 @@ public class Engine extends JPanel implements Runnable {
 	
 	// Game States
 	public int gameState;
-	public final int playState = 1;
-	public final int pauseState = 2;
-	public final int titleState = 3;
+	public final int titleState = 1;
+	public final int playState = 2;
+	public final int pauseState = 3;
 	public final int deathState = 4;
 	
 	// INSTANCES
 	public InputHandler inputH = new InputHandler(this);
+	public TileManager tileM = new TileManager(this);
 	private Thread gameThread;
 	
 	public Engine() {
@@ -130,11 +133,15 @@ public class Engine extends JPanel implements Runnable {
 		
 		// TODO Depending on Game State render Actors and UI.
 		// TITLE SCREEN
+		if (gameState == titleState) {
+			
+		} else {
 		// TILES
+		tileM.draw(g2);
 		// OBJECTS
 		// ACTORS
 		// UI
-		
+		}
 		// release unnecessary memory after rendering.
 		g2.dispose();
 	}

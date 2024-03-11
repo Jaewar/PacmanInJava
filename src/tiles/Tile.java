@@ -1,5 +1,7 @@
 package tiles;
 
+import java.awt.image.BufferedImage;
+
 /*
  * Author:			Jacob Stewart
  * Project:			Pacman in Java
@@ -9,5 +11,6 @@ package tiles;
  */
 
 public class Tile {
-
+	public BufferedImage image;
+	public boolean collision = false;
 }

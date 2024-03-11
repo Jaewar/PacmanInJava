@@ -37,7 +37,19 @@ public class InputHandler implements KeyListener {
 		// TODO Depending on game state create statements to control key input.
 		int keyCode = e.getKeyCode();
 		
-		if (keyCode == KeyEvent.VK_W) {
+
+		// DEBUG GAME STATE SWAPPING
+		if (keyCode == KeyEvent.VK_NUMPAD1) {
+			engine.gameState = 1;
+		}
+		if (keyCode == KeyEvent.VK_NUMPAD2) {
+			engine.gameState = 2;
+		}
+		if (keyCode == KeyEvent.VK_NUMPAD3) {
+			engine.gameState = 3;
+		}
+		if (keyCode == KeyEvent.VK_NUMPAD4) {
+			engine.gameState = 4;
 		}
 		
 	}
