@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.JFrame;
+
 /*
  * Author:			Jacob Stewart
  * Project:			Pacman in Java
@@ -14,10 +16,25 @@ public class Main {
 
 	public static void main(String[] args) {
 	
-		// TODO Implement JFrame with JPanel
+		JFrame window = new JFrame();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setResizable(false);
+		window.setTitle("Pacman In Java");
 		
-		// TODO Setup game and start thread
+		// Adding JPanel to JFrame
+		Engine engine = new Engine();
+		window.add(engine);
+		// Forcing JFrame to fit the size of its subcomponent (JPanel)
+		window.pack();
 		
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+		
+		// Setup game and start thread
+		engine.startThread();
+		engine.setupGame();
 	}
+	
+	
 
 }
