@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import actors.Pacman;
 import tiles.TileManager;
 
 /*
@@ -44,6 +45,7 @@ public class Engine extends JPanel implements Runnable {
 	
 	// INSTANCES
 	public InputHandler inputH = new InputHandler(this);
+	public Pacman pacman = new Pacman(this, inputH);
 	public TileManager tileM = new TileManager(this);
 	private Thread gameThread;
 	
@@ -115,7 +117,7 @@ public class Engine extends JPanel implements Runnable {
 			//System.out.println("Title State 3");
 			break;
 		case playState:
-			//System.out.println("Play State 1");
+			pacman.update();
 			break;
 		case pauseState:
 			//System.out.println("Pause State 2");
@@ -140,6 +142,7 @@ public class Engine extends JPanel implements Runnable {
 		tileM.draw(g2);
 		// OBJECTS
 		// ACTORS
+		pacman.draw(g2);
 		// UI
 		}
 		// release unnecessary memory after rendering.
