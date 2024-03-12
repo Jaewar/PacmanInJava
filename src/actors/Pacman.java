@@ -30,7 +30,7 @@ public class Pacman extends Actor {
 		this.engine = e;
 		this.inputH = inputH;
 
-		hitbox = new Rectangle();
+		hitbox = new Rectangle(8,8,8,8);
 
 		// recording default hitbox location
 		hitboxDefaultX = hitbox.x;
@@ -51,7 +51,6 @@ public class Pacman extends Actor {
 	}
 
 	public void getPlayerImage() {
-
 		idle1 = setup("pacmanStill");
 		up1 = setup("pacmanUp2");
 		up2 = setup("pacmanUp1");

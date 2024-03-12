@@ -1,5 +1,9 @@
 package objects;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 /*
  * Author:			Jacob Stewart
  * Project:			Pacman in Java
@@ -9,10 +13,18 @@ package objects;
  * 		its own image and unique pickup action.
  */
 
-public class OBJ_Small_Pellet {
+public class OBJ_Small_Pellet extends Object {
 
 	public OBJ_Small_Pellet() {
-		// TODO Auto-generated constructor stub
+		
+		name = "Pellet";
+		
+		try {
+			image = ImageIO.read(getClass().getResource("/objects/orb.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

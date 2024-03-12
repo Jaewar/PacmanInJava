@@ -108,6 +108,7 @@ public class Engine extends JPanel implements Runnable {
 			}
 
 		}
+		System.out.println("Thread closed");
 		gameThread = null;
 	}
 	
