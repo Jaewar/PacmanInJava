@@ -114,7 +114,7 @@ public class UI {
 			// SHADOW / BLINKY (RED)
 			if (introTimer > 2) {
 				g2.setColor(Color.red);
-				//g2.drawImage(engine.rGhost.right1, 100, 180, ghostSize, ghostSize, null);
+				g2.drawImage(engine.rGhost.right1, 100, 180, ghostSize, ghostSize, null);
 				g2.drawString("- SHADOW", 170, 210);
 				g2.drawString("\"BLINKY\"", 400, 210);
 			}

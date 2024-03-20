@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import actors.Pacman;
+import actors.RedGhost;
 import collision.CollisionManager;
 import objects.ObjectManager;
 import objects.SuperObject;
@@ -55,6 +59,7 @@ public class Engine extends JPanel implements Runnable {
 	// INSTANCES
 	public InputHandler inputH = new InputHandler(this);
 	public Pacman pacman = new Pacman(this, inputH);
+	public RedGhost rGhost = new RedGhost(this);
 	public TileManager tileM = new TileManager(this);
 	public CollisionManager cManager = new CollisionManager(this);
 	public ObjectManager oManager = new ObjectManager(this);
@@ -63,6 +68,8 @@ public class Engine extends JPanel implements Runnable {
 	public SuperObject obj[] = new SuperObject[200];
 	
 	private Thread gameThread;
+	
+	public BufferedImage iconImage;
 	
 	public Engine() {
 		// JPANEL SETTINGS
@@ -73,6 +80,13 @@ public class Engine extends JPanel implements Runnable {
 		
 		this.addKeyListener(inputH);
 		this.setFocusable(true);
+		
+		// setting icon image
+		try {
+			iconImage = ImageIO.read(getClass().getResource("/player/" + "pacmanLeft1" + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void startThread() {
@@ -140,6 +154,7 @@ public class Engine extends JPanel implements Runnable {
 			break;
 		case playState:
 			pacman.update();
+			rGhost.update();
 			break;
 		case pauseState:
 			//System.out.println("Pause State 2");
@@ -172,6 +187,7 @@ public class Engine extends JPanel implements Runnable {
 		
 		// ACTORS
 		pacman.draw(g2);
+		rGhost.draw(g2);
 		
 		// UI
 		ui.draw(g2);

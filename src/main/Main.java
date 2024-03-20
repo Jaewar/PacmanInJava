@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  */
 
 public class Main {
-
+	
 	public static void main(String[] args) {
 	
 		JFrame window = new JFrame();
@@ -24,6 +24,7 @@ public class Main {
 		// Adding JPanel to JFrame
 		Engine engine = new Engine();
 		window.add(engine);
+		window.setIconImage(engine.iconImage);
 		// Forcing JFrame to fit the size of its subcomponent (JPanel)
 		window.pack();
 		
