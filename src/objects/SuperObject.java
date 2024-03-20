@@ -14,7 +14,7 @@ import main.Engine;
  * 		This super class represents data shared between each object in the game.
  */
 
-public class Object {
+public class SuperObject {
 
 	public BufferedImage image;
 	public String name;

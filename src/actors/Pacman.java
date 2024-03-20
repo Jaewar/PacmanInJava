@@ -150,7 +150,7 @@ public class Pacman extends Actor {
 		g2.drawImage(image, x, y, null);
 
 		g2.setColor(Color.red);
-		g2.drawRect(x + hitbox.x, y + hitbox.y, hitbox.width * 2, hitbox.height * 2);
+		g2.drawRect(x + hitbox.x, y + hitbox.y, hitbox.width, hitbox.height);
 
 	}
 

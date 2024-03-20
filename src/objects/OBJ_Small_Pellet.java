@@ -13,14 +13,14 @@ import javax.imageio.ImageIO;
  * 		its own image and unique pickup action.
  */
 
-public class OBJ_Small_Pellet extends Object {
+public class OBJ_Small_Pellet extends SuperObject {
 
 	public OBJ_Small_Pellet() {
 		
 		name = "Pellet";
 		
 		try {
-			image = ImageIO.read(getClass().getResource("/objects/orb.png"));
+			image = ImageIO.read(getClass().getResource("/objects/pellet.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

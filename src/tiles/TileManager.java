@@ -56,6 +56,7 @@ public class TileManager {
 		setupTile(22, "wallTUp", true);
 		setupTile(23, "wallTLeft", true);
 		setupTile(24, "wallTRight", true);
+		setupTile(25, "floor2", false);
 		
 		
 	}

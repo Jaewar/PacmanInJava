@@ -21,7 +21,7 @@ public class CollisionManager {
 	}
 
 	public void checkTiles(Actor actor) {
-		// Method used to check collision for all actors.
+		// Method used to check tile collision for all actors.
 
 		// Getting coordinates of the hitbox bounds.
 		int actorLeftX = actor.x + actor.hitbox.x; // hitbox left position on x axis
@@ -96,4 +96,54 @@ public class CollisionManager {
 			actor.y = 10 * engine.tileSize;
 		}
 	}
+	
+	// PACMAN ACTOR SHOULD NEVER CALL THIS METHOD
+	public boolean checkPacman(Actor actor) {
+		boolean contactPacman = false;
+		
+		// getting actors hitbox position
+		actor.hitbox.x = actor.x + actor.hitbox.x;
+		actor.hitbox.y = actor.y + actor.hitbox.y;
+		
+		// getting pacmans current hitbox position
+		engine.pacman.hitbox.x = engine.pacman.x + engine.pacman.hitbox.x;
+		engine.pacman.hitbox.y = engine.pacman.y + engine.pacman.hitbox.y;
+		
+		//@formatter:off
+		// moving the entities hitbox with its current movement
+		switch (actor.direction) {
+			case "up": actor.hitbox.y -= actor.speed; break;
+			case "down": actor.hitbox.y += actor.speed; break;
+			case "left": actor.hitbox.x -= actor.speed; break;
+			case "right": actor.hitbox.x += actor.speed; break;
+		}
+		//@formatter:on
+		
+		// checking if ghost hitbox intersects with pacmans hitbox
+		if (actor.hitbox.intersects(engine.pacman.hitbox)) {
+			actor.colliding = true;
+			contactPacman = true;
+		}
+		
+		// resetting hitboxes to default values
+		actor.hitbox.x = actor.hitboxDefaultX;
+		actor.hitbox.y = actor.hitboxDefaultY;
+		engine.pacman.hitbox.x = engine.pacman.hitboxDefaultX;
+		engine.pacman.hitbox.y = engine.pacman.hitboxDefaultY;
+		
+		return contactPacman;
+	}
+	
+	/*
+	 * public int checkObject(Actor actor, boolean player) { // index = 999, could
+	 * be any number however object array should never be greater than 900. int
+	 * index = 999;
+	 * 
+	 * for (int i = 0; i < engine.obj.length; i++) {
+	 * 
+	 * }
+	 * 
+	 * // If index is anything other than 999, an object was collided with. return
+	 * index; }
+	 */
 }

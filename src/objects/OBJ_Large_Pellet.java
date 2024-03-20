@@ -1,5 +1,9 @@
 package objects;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 /*
  * Author:			Jacob Stewart
  * Project:			Pacman in Java
@@ -9,10 +13,16 @@ package objects;
  * 		its own image and unique pickup action.
  */
 
-public class OBJ_Large_Pellet {
+public class OBJ_Large_Pellet extends SuperObject {
 
 	public OBJ_Large_Pellet() {
-		// TODO Auto-generated constructor stub
+		name = "LargePellet";
+		
+		try {
+			image = ImageIO.read(getClass().getResource("/objects/largePellet.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

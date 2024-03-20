@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 
 import actors.Pacman;
 import collision.CollisionManager;
+import objects.ObjectManager;
+import objects.SuperObject;
 import tiles.TileManager;
 
 /*
@@ -44,11 +46,19 @@ public class Engine extends JPanel implements Runnable {
 	public final int pauseState = 3;
 	public final int deathState = 4;
 	
+	// Scoring
+	public int score;
+	public int highScore;
+	public int pelletsRemaining;
+	
 	// INSTANCES
 	public InputHandler inputH = new InputHandler(this);
 	public Pacman pacman = new Pacman(this, inputH);
 	public TileManager tileM = new TileManager(this);
 	public CollisionManager cManager = new CollisionManager(this);
+	public ObjectManager oManager = new ObjectManager(this);
+	public SuperObject obj[] = new SuperObject[200];
+	
 	private Thread gameThread;
 	
 	public Engine() {
@@ -69,6 +79,10 @@ public class Engine extends JPanel implements Runnable {
 	
 	public void setupGame() {
 		gameState = titleState;
+		
+		score = 0;
+		
+		oManager.setObject();
 	}
 
 	@Override
@@ -139,13 +153,21 @@ public class Engine extends JPanel implements Runnable {
 		// TODO Depending on Game State render Actors and UI.
 		// TITLE SCREEN
 		if (gameState == titleState) {
-			
+			// TODO Draw Title State (UI of some kind)
 		} else {
 		// TILES
 		tileM.draw(g2);
+		
 		// OBJECTS
+		for (int i = 0; i < obj.length; i++) {
+			if (obj[i] != null) {
+				obj[i].draw(g2, this);
+			}
+		}
+		
 		// ACTORS
 		pacman.draw(g2);
+		
 		// UI
 		}
 		// release unnecessary memory after rendering.
