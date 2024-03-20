@@ -12,6 +12,7 @@ import collision.CollisionManager;
 import objects.ObjectManager;
 import objects.SuperObject;
 import tiles.TileManager;
+import ui.UI;
 
 /*
  * Author:			Jacob Stewart
@@ -57,6 +58,8 @@ public class Engine extends JPanel implements Runnable {
 	public TileManager tileM = new TileManager(this);
 	public CollisionManager cManager = new CollisionManager(this);
 	public ObjectManager oManager = new ObjectManager(this);
+	public UI ui = new UI(this);
+	
 	public SuperObject obj[] = new SuperObject[200];
 	
 	private Thread gameThread;
@@ -81,6 +84,8 @@ public class Engine extends JPanel implements Runnable {
 		gameState = titleState;
 		
 		score = 0;
+		
+		ui.resetUI();
 		
 		oManager.setObject();
 	}
@@ -131,7 +136,7 @@ public class Engine extends JPanel implements Runnable {
 	public void update() {
 		switch(gameState) {
 		case titleState:
-			//System.out.println("Title State 3");
+			ui.update();
 			break;
 		case playState:
 			pacman.update();
@@ -153,7 +158,7 @@ public class Engine extends JPanel implements Runnable {
 		// TODO Depending on Game State render Actors and UI.
 		// TITLE SCREEN
 		if (gameState == titleState) {
-			// TODO Draw Title State (UI of some kind)
+			ui.draw(g2);
 		} else {
 		// TILES
 		tileM.draw(g2);
@@ -169,6 +174,7 @@ public class Engine extends JPanel implements Runnable {
 		pacman.draw(g2);
 		
 		// UI
+		ui.draw(g2);
 		}
 		// release unnecessary memory after rendering.
 		g2.dispose();

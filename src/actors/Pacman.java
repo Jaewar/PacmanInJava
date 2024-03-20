@@ -27,6 +27,7 @@ public class Pacman extends Actor {
 	private Engine engine;
 	private InputHandler inputH;
 	Rectangle upColl, downColl, leftColl, rightColl;
+	public int lives;
 
 	public Pacman(Engine e, InputHandler inputH) {
 		this.engine = e;
@@ -40,6 +41,8 @@ public class Pacman extends Actor {
 
 		setDefaultValues();
 		getPlayerImage();
+		
+		lives = 3;
 
 	}
 
