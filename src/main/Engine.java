@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import actors.Pacman;
+import collision.CollisionManager;
 import tiles.TileManager;
 
 /*
@@ -47,6 +48,7 @@ public class Engine extends JPanel implements Runnable {
 	public InputHandler inputH = new InputHandler(this);
 	public Pacman pacman = new Pacman(this, inputH);
 	public TileManager tileM = new TileManager(this);
+	public CollisionManager cManager = new CollisionManager(this);
 	private Thread gameThread;
 	
 	public Engine() {

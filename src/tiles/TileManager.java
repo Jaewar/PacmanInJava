@@ -1,6 +1,8 @@
 package tiles;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,6 +60,7 @@ public class TileManager {
 		
 	}
 	
+	// Finds and Scales tile image based on res folder location and assigns a collision value.
 	public void setupTile(int index, String imagePath, boolean collision) {
 		ImageScaler iScale = new ImageScaler();
 		
@@ -79,6 +82,7 @@ public class TileManager {
 			int col = 0;
 			int row = 0;
 
+			// iterating through file based on screen size allotted
 			while (col < engine.maxScreenCol && row < engine.maxScreenRow) {
 
 				String line = br.readLine();
@@ -88,7 +92,9 @@ public class TileManager {
 					
 					int num = Integer.parseInt(numbers[col]);
 					
+					// assigning the col and row to the number from file (corresponds to a tile)
 					mapTileNum[col][row] = num;
+					
 					col++;
 				}
 				if (col == engine.maxScreenCol) {
@@ -103,6 +109,8 @@ public class TileManager {
 
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 
@@ -113,11 +121,16 @@ public class TileManager {
 		int x = 0;
 		int y = 0;
 
+		// iterating across the screen
 		while (col < engine.maxScreenCol && row < engine.maxScreenRow) {
 			
 			int tileNum = mapTileNum[col][row];
 			
+			// drawing specified tile at appropriate x and y
 			g2.drawImage(tile[tileNum].image, x, y, null);
+			g2.setColor(Color.red);
+			
+			//  increasing x and y values by tile size (i.e 32x32)
 			col++;
 			x += engine.tileSize;
 

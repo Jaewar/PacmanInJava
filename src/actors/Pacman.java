@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import main.Engine;
 import main.InputHandler;
+import tiles.Tile;
 import utils.ImageScaler;
 
 /*
@@ -25,6 +26,7 @@ public class Pacman extends Actor {
 
 	private Engine engine;
 	private InputHandler inputH;
+	Rectangle upColl, downColl, leftColl, rightColl;
 
 	public Pacman(Engine e, InputHandler inputH) {
 		this.engine = e;
@@ -90,12 +92,18 @@ public class Pacman extends Actor {
 				direction = "right";
 			}
 
+			colliding = false;
+			engine.cManager.checkTiles(this);
+			
+			// Adjusting x and y pos based on speed.
 			// @formatter:off
-			switch (direction) {
-			case "up": y -= speed; break;
-			case "down": y += speed; break;
-			case "left": x -= speed; break;
-			case "right": x += speed; break;
+			if (colliding == false) {
+				switch (direction) {
+				case "up": y -= speed; break;
+				case "down": y += speed; break;
+				case "left": x -= speed; break;
+				case "right": x += speed; break;
+				}
 			}
 			// @formatter:on
 		}
