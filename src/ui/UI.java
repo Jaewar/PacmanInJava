@@ -144,7 +144,7 @@ public class UI {
 			}
 			if (introTimer > 6) {
 				// Pacman and ghosts			
-				//g2.drawImage(engine.rGhost.left1, rX, 560, 32, 32, null);
+				g2.drawImage(engine.rGhost.left1, rX, 560, 32, 32, null);
 				//g2.drawImage(engine.pGhost.left1, pX, 560, 32, 32, null);
 				//g2.drawImage(engine.bGhost.left1, bX, 560, 32, 32, null);
 				//g2.drawImage(engine.oGhost.left1, oX, 560, 32, 32, null);

@@ -26,7 +26,6 @@ public class Pacman extends Actor {
 
 	private Engine engine;
 	private InputHandler inputH;
-	Rectangle upColl, downColl, leftColl, rightColl;
 	public int lives;
 
 	public Pacman(Engine e, InputHandler inputH) {
@@ -98,6 +97,9 @@ public class Pacman extends Actor {
 			colliding = false;
 			engine.cManager.checkTiles(this);
 			
+			int objIndex = engine.cManager.checkObject(this, true);
+			pickUpObject(objIndex);
+			
 			// Adjusting x and y pos based on speed.
 			// @formatter:off
 			if (colliding == false) {
@@ -122,6 +124,73 @@ public class Pacman extends Actor {
 			}
 			spriteCounter = 0;
 		}
+	}
+	
+	private void pickUpObject(int i) {
+		if (i != 999) {
+
+			String objectName = engine.obj[i].name;
+
+			switch (objectName) {
+			case "Pellet":
+				//engine.stopSE();
+				//engine.playSE(1);
+				engine.score += 10;
+				engine.obj[i] = null;
+				engine.pelletsRemaining -= 1;
+				break;
+			case "LargePellet":
+				engine.score += 15;
+				engine.obj[i] = null;
+				engine.rGhost.state = engine.rGhost.runState;
+				engine.pelletsRemaining -= 1;
+				break;
+			case "TPRight":
+				this.x = engine.tileSize * -1;
+				this.y = engine.tileSize * 12;
+				break;
+			case "TPLeft":
+				this.x = engine.tileSize * 19;
+				this.y = engine.tileSize * 12;
+				break;
+			}
+
+		}
+		
+		  //Possible code to reset objects and player position. 
+		int count = 0; 
+		for (int j= 0; j < engine.obj.length; j++) { 
+			if (engine.obj[j] != null) { 
+				count++; 
+			} 
+		} 
+		// ghost release conditions
+		if (count < 150) {
+
+		}
+		if (count < 120) {
+
+		} 
+		if (count < 170) {
+
+		}
+		System.out.println(engine.pelletsRemaining);
+		if (engine.pelletsRemaining < 1) {
+			engine.oManager.setObject();
+			
+			engine.rGhost.setDefaultValues();
+			
+			// TODO reset pacman on map completion
+			//resetValuesOnCompletion();
+			
+			// TODO highscore manager needs implementing.
+			//engine.hsm.writeScore();
+		}
+		
+		// TODO HANDLE LIFEUP after 10000 score.
+		/*
+		 * if (engine.score >= lifeUpScore) { lifeUpScore += 10000; lives++; }
+		 */
 	}
 
 	public void draw(Graphics2D g2) {

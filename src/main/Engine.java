@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import actors.Pacman;
 import actors.RedGhost;
+import ai.PathFinder;
 import collision.CollisionManager;
 import objects.ObjectManager;
 import objects.SuperObject;
@@ -64,6 +65,7 @@ public class Engine extends JPanel implements Runnable {
 	public CollisionManager cManager = new CollisionManager(this);
 	public ObjectManager oManager = new ObjectManager(this);
 	public UI ui = new UI(this);
+	public PathFinder pFinder = new PathFinder(this);
 	
 	public SuperObject obj[] = new SuperObject[200];
 	
@@ -102,6 +104,9 @@ public class Engine extends JPanel implements Runnable {
 		ui.resetUI();
 		
 		oManager.setObject();
+		
+		pacman.setDefaultValues();
+		rGhost.setDefaultValues();
 	}
 
 	@Override

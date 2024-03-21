@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * 		This super class provides the shared methods and variables between all actors.
  */
 
-public class Actor {
+public abstract class Actor {
 
 	public int x, y, speed;
 	
@@ -26,5 +26,6 @@ public class Actor {
 	public int hitboxDefaultX, hitboxDefaultY;
 	
 	public boolean colliding = false;
+	
 	
 }
