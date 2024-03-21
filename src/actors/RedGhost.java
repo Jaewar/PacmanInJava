@@ -215,7 +215,7 @@ public class RedGhost extends Actor {
 		boolean contactPlayer = engine.cManager.checkPacman(this);
 
 		if (contactPlayer == true && state == chaseState) {
-			// engine.pacman.isDead = true;
+			engine.pacman.isDead = true;
 		}
 		if (contactPlayer == true && state == runState) {
 			setDefaultValues();

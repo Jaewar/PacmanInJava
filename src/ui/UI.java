@@ -27,7 +27,7 @@ public class UI {
 	// pacman and ghost starting positions for run across animations.
 	private int pManX = 600, rX = 650, bX = 700, pX = 750, oX = 800;
 
-	public boolean runIntro = true;
+	public boolean runIntro = false;
 	
 	public UI(Engine e) {
 		this.engine = e;

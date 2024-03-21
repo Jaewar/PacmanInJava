@@ -26,7 +26,11 @@ public class Pacman extends Actor {
 
 	private Engine engine;
 	private InputHandler inputH;
+	
 	public int lives;
+	public int lifeUpScore = 10000;
+	
+	public boolean isDead = false;
 
 	public Pacman(Engine e, InputHandler inputH) {
 		this.engine = e;
@@ -46,12 +50,30 @@ public class Pacman extends Actor {
 	}
 
 	public void setDefaultValues() {
-		// X and Y are calculated by multiplying the tileSize by the tile position
-		// where you need pacman to start I.E 9 tiles right 18 tiles down.
+		resetPacman();
+		lives = 3;
+	}
+	
+	public void resetPacman() {
 		x = engine.tileSize * 9;
 		y = engine.tileSize * 18;
+		
+		isDead = false;
+		
 		speed = 2;
 		direction = "left";
+		engine.inputH.resetKeys();
+	}
+	
+	public void killPacman() {
+		if (lives == 1) {
+			// save highscore
+			engine.setupGame();
+		} else {
+			resetPacman();
+			lives -=1;
+			engine.gameState = engine.playState;
+		}
 	}
 
 	public void getPlayerImage() {
@@ -81,6 +103,7 @@ public class Pacman extends Actor {
 	}
 
 	public void update() {
+		if (isDead == false) {
 		if (inputH.upPressed == true || inputH.downPressed == true || inputH.leftPressed == true
 				|| inputH.rightPressed == true) {
 			// player position and movement
@@ -124,6 +147,28 @@ public class Pacman extends Actor {
 			}
 			spriteCounter = 0;
 		}
+		} else {
+			engine.gameState = engine.deathState;
+			spriteCounter++;
+			if (spriteCounter > 30) {
+				if (spriteNum == 1) {
+					spriteNum = 2;
+				} else if (spriteNum == 2) {
+					spriteNum = 3;
+				} else if (spriteNum == 3) {		
+					spriteNum = 4;
+				} else if (spriteNum == 4) {
+					killPacman();
+					engine.rGhost.setDefaultValues();
+					
+					engine.bGhost.canActivate = true;
+					engine.bGhost.isActive = false;
+					engine.bGhost.setDefaultValues();
+					spriteNum = 1;
+				}
+				spriteCounter = 0;
+			}
+		}
 	}
 	
 	private void pickUpObject(int i) {
@@ -143,6 +188,7 @@ public class Pacman extends Actor {
 				engine.score += 15;
 				engine.obj[i] = null;
 				engine.rGhost.state = engine.rGhost.runState;
+				engine.bGhost.state = engine.bGhost.runState;
 				engine.pelletsRemaining -= 1;
 				break;
 			case "TPRight":
@@ -166,7 +212,11 @@ public class Pacman extends Actor {
 		} 
 		// ghost release conditions
 		if (count < 150) {
-
+			if (engine.bGhost.canActivate == true) {
+				engine.bGhost.isActive = true;
+				engine.bGhost.setDefaultValues();
+				engine.bGhost.canActivate = false;
+			}
 		}
 		if (count < 120) {
 
@@ -180,17 +230,22 @@ public class Pacman extends Actor {
 			
 			engine.rGhost.setDefaultValues();
 			
-			// TODO reset pacman on map completion
-			//resetValuesOnCompletion();
+			engine.bGhost.isActive = false;
+			engine.bGhost.canActivate = true;
+			engine.bGhost.setDefaultValues();
+			
+			resetPacman();
+			
+			engine.score += 1000;
 			
 			// TODO highscore manager needs implementing.
 			//engine.hsm.writeScore();
 		}
-		
-		// TODO HANDLE LIFEUP after 10000 score.
-		/*
-		 * if (engine.score >= lifeUpScore) { lifeUpScore += 10000; lives++; }
-		 */
+		if (engine.score >= lifeUpScore) { 
+			lifeUpScore += 10000; 
+			lives++; 
+		}
+		 
 	}
 
 	public void draw(Graphics2D g2) {
@@ -199,6 +254,7 @@ public class Pacman extends Actor {
 		
 		// @formatter:off
 		// Swapping Pacman image based on current sprite num.
+		if (isDead == false) {
 		switch (direction) {
 		case "up":
 			if (spriteNum == 1) image = up1;
@@ -216,6 +272,18 @@ public class Pacman extends Actor {
 			if (spriteNum == 1) image = right1;
 			if (spriteNum == 2) image = right2;
 			if (spriteNum == 3) image = idle1; break;
+		}
+		} else {
+			if (spriteNum == 1) {
+				image = idle1;
+			}
+			if (spriteNum == 2) {
+				image = up1;
+			}
+			if (spriteNum == 3) {
+				image = up2;
+			}
+			g2.drawImage(image, x, y, null);
 		}
 		// @formatter:on
 

@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import actors.BlueGhost;
 import actors.Pacman;
 import actors.RedGhost;
 import ai.PathFinder;
@@ -61,6 +62,7 @@ public class Engine extends JPanel implements Runnable {
 	public InputHandler inputH = new InputHandler(this);
 	public Pacman pacman = new Pacman(this, inputH);
 	public RedGhost rGhost = new RedGhost(this);
+	public BlueGhost bGhost = new BlueGhost(this);
 	public TileManager tileM = new TileManager(this);
 	public CollisionManager cManager = new CollisionManager(this);
 	public ObjectManager oManager = new ObjectManager(this);
@@ -107,6 +109,7 @@ public class Engine extends JPanel implements Runnable {
 		
 		pacman.setDefaultValues();
 		rGhost.setDefaultValues();
+		bGhost.setDefaultValues();
 	}
 
 	@Override
@@ -160,12 +163,13 @@ public class Engine extends JPanel implements Runnable {
 		case playState:
 			pacman.update();
 			rGhost.update();
+			bGhost.update();
 			break;
 		case pauseState:
 			//System.out.println("Pause State 2");
 			break;
 		case deathState:
-			//System.out.println("Death State 4");
+			pacman.update();
 			break;
 		}
 	}
@@ -193,6 +197,7 @@ public class Engine extends JPanel implements Runnable {
 		// ACTORS
 		pacman.draw(g2);
 		rGhost.draw(g2);
+		bGhost.draw(g2);
 		
 		// UI
 		ui.draw(g2);
