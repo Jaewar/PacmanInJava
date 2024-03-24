@@ -24,10 +24,13 @@ public class UI {
 	// timers for intro sequence
 	private int introTimer = 0, counter = 0;
 	
+	// timers for start countdown
+	private int startTimer = 4, startCounter = 0;
+	
 	// pacman and ghost starting positions for run across animations.
 	private int pManX = 600, rX = 650, bX = 700, pX = 750, oX = 800;
 
-	public boolean runIntro = false;
+	public boolean runIntro = true;
 	
 	public UI(Engine e) {
 		this.engine = e;
@@ -58,6 +61,20 @@ public class UI {
 			introTimer = 0;
 			runIntro = false;
 		}
+		if (engine.gameState == engine.playState) {
+			if (engine.startCountdown = true) {
+				if (startTimer > 0) {
+					startCounter++;
+					if (startCounter >= 60) {
+					startTimer--;
+					startCounter = 0;
+					}
+				}
+				if (startTimer == 0) {
+					engine.startCountdown = false;
+				}
+			}
+		}
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -83,12 +100,25 @@ public class UI {
 				g2.drawImage(engine.pacman.left1, xOffset, 800, null);
 				xOffset += 50;
 			}
+			if (engine.startCountdown == true) {
+				if (startTimer == 1) {
+					g2.drawString("GO!", engine.tileSize * 8, engine.tileSize * 15);
+				} else {
+				g2.drawString("" + startTimer, engine.tileSize * 9, engine.tileSize * 15);
+				}
+			}
 		}
 		
 		// PAUSE STATE (DEBUG)
 		if (engine.gameState == engine.pauseState) {
 			drawPauseScreen();
 		}
+	}
+	
+	public void restartStartTimer() {
+		engine.startCountdown = true;
+		this.startTimer = 4;
+		this.startCounter = 0;
 	}
 
 	public void drawTitleScreen() {

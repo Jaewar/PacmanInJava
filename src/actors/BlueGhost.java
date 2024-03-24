@@ -153,7 +153,7 @@ public class BlueGhost extends Actor {
 	}
 
 	public int getGoalRow(Actor target) {
-		int goalRow = (target.y + target.hitbox.y) / engine.tileSize;
+		int goalRow = ((target.y + target.hitbox.y) / engine.tileSize) -1;
 		return goalRow;
 	}
 

@@ -164,7 +164,17 @@ public class Pacman extends Actor {
 					engine.bGhost.canActivate = true;
 					engine.bGhost.isActive = false;
 					engine.bGhost.setDefaultValues();
+					
+					engine.pGhost.canActivate = true;
+					engine.pGhost.isActive = false;
+					engine.pGhost.setDefaultValues();
+					
+					engine.oGhost.canActivate = true;
+					engine.oGhost.isActive = false;
+					engine.oGhost.setDefaultValues();
 					spriteNum = 1;
+					
+					engine.ui.restartStartTimer();
 				}
 				spriteCounter = 0;
 			}
@@ -189,6 +199,8 @@ public class Pacman extends Actor {
 				engine.obj[i] = null;
 				engine.rGhost.state = engine.rGhost.runState;
 				engine.bGhost.state = engine.bGhost.runState;
+				engine.oGhost.state = engine.oGhost.runState;
+				engine.pGhost.state = engine.pGhost.runState;
 				engine.pelletsRemaining -= 1;
 				break;
 			case "TPRight":
@@ -217,9 +229,19 @@ public class Pacman extends Actor {
 				engine.bGhost.setDefaultValues();
 				engine.bGhost.canActivate = false;
 			}
+			if (engine.pGhost.canActivate == true) {
+				engine.pGhost.isActive = true;
+				engine.pGhost.setDefaultValues();
+				engine.pGhost.canActivate = false;
+			}
+			if (engine.oGhost.canActivate == true) {
+				engine.oGhost.isActive = true;
+				engine.oGhost.setDefaultValues();
+				engine.oGhost.canActivate = false;
+			}
 		}
 		if (count < 120) {
-
+			
 		} 
 		if (count < 170) {
 
@@ -233,6 +255,14 @@ public class Pacman extends Actor {
 			engine.bGhost.isActive = false;
 			engine.bGhost.canActivate = true;
 			engine.bGhost.setDefaultValues();
+			
+			engine.pGhost.isActive = false;
+			engine.pGhost.canActivate = true;
+			engine.pGhost.setDefaultValues();
+			
+			engine.oGhost.isActive = false;
+			engine.oGhost.canActivate = true;
+			engine.oGhost.setDefaultValues();
 			
 			resetPacman();
 			

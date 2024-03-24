@@ -11,7 +11,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import actors.BlueGhost;
+import actors.OrangeGhost;
 import actors.Pacman;
+import actors.PinkGhost;
 import actors.RedGhost;
 import ai.PathFinder;
 import collision.CollisionManager;
@@ -53,6 +55,8 @@ public class Engine extends JPanel implements Runnable {
 	public final int pauseState = 3;
 	public final int deathState = 4;
 	
+	public boolean startCountdown = true;
+	
 	// Scoring
 	public int score;
 	public int highScore;
@@ -63,6 +67,8 @@ public class Engine extends JPanel implements Runnable {
 	public Pacman pacman = new Pacman(this, inputH);
 	public RedGhost rGhost = new RedGhost(this);
 	public BlueGhost bGhost = new BlueGhost(this);
+	public PinkGhost pGhost = new PinkGhost(this);
+	public OrangeGhost oGhost = new OrangeGhost(this);
 	public TileManager tileM = new TileManager(this);
 	public CollisionManager cManager = new CollisionManager(this);
 	public ObjectManager oManager = new ObjectManager(this);
@@ -110,6 +116,8 @@ public class Engine extends JPanel implements Runnable {
 		pacman.setDefaultValues();
 		rGhost.setDefaultValues();
 		bGhost.setDefaultValues();
+		pGhost.setDefaultValues();
+		oGhost.setDefaultValues();
 	}
 
 	@Override
@@ -161,9 +169,14 @@ public class Engine extends JPanel implements Runnable {
 			ui.update();
 			break;
 		case playState:
+			ui.update();
+			if (startCountdown == false) {
 			pacman.update();
 			rGhost.update();
 			bGhost.update();
+			pGhost.update();
+			oGhost.update();
+			}
 			break;
 		case pauseState:
 			//System.out.println("Pause State 2");
@@ -198,6 +211,8 @@ public class Engine extends JPanel implements Runnable {
 		pacman.draw(g2);
 		rGhost.draw(g2);
 		bGhost.draw(g2);
+		pGhost.draw(g2);
+		oGhost.draw(g2);
 		
 		// UI
 		ui.draw(g2);
