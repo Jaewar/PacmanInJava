@@ -1,6 +1,5 @@
 package tiles;
 
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /*

@@ -2,7 +2,6 @@ package ai;
 
 import java.util.ArrayList;
 
-import actors.Actor;
 import main.Engine;
 
 /*

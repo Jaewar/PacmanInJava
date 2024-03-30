@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import Sound.SoundManager;
 import actors.BlueGhost;
 import actors.OrangeGhost;
 import actors.Pacman;
@@ -76,6 +77,7 @@ public class Engine extends JPanel implements Runnable {
 	public UI ui = new UI(this);
 	public PathFinder pFinder = new PathFinder(this);
 	public HighscoreManager hsm = new HighscoreManager(this);
+	public SoundManager music = new SoundManager();
 	
 	public SuperObject obj[] = new SuperObject[200];
 	
@@ -122,6 +124,8 @@ public class Engine extends JPanel implements Runnable {
 		oGhost.setDefaultValues();
 		
 		hsm.loadScore();
+		
+		
 	}
 
 	@Override
@@ -229,7 +233,9 @@ public class Engine extends JPanel implements Runnable {
 	
 	// AUDIO CONTROL
 	public void playMusic(int i) {
-		
+		music.volumeScale = 3;
+		music.setFile(i);
+		music.play();	
 	}
 	
 	public void stopMusic() {

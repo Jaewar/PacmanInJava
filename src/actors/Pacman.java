@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 
 import main.Engine;
 import main.InputHandler;
-import tiles.Tile;
 import utils.ImageScaler;
 
 /*
@@ -179,6 +178,8 @@ public class Pacman extends Actor {
 					spriteNum = 1;
 					
 					engine.ui.restartStartTimer();
+					// playing 0 in music array (main start theme)
+					engine.playMusic(0);
 				}
 				spriteCounter = 0;
 			}
@@ -224,6 +225,8 @@ public class Pacman extends Actor {
 			if (engine.score > 999999) {
 				engine.score = 999999;
 			}
+			// playing 0 in music array (main start theme)
+			engine.playMusic(1);
 
 		}
 		

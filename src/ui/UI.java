@@ -88,12 +88,13 @@ public class UI {
 		// PLAY STATE
 		if (engine.gameState == engine.playState) {
 			// drawing score, highscore and player lives.
-			g2.setFont(arial_40);
+			g2.setFont(arial_40.deriveFont(Font.BOLD, 30));
 			g2.setColor(Color.white);
 			
 			g2.drawString("Score: " + engine.score, 25, 50);
-			g2.drawString("HighScore: " + engine.highScore, 250, 50);
+			g2.drawString("HighScore: " + engine.highScore, 300, 50);
 			
+			g2.setFont(arial_40);
 			// player lives
 			int xOffset = 25;
 			for (int i = 0; i < engine.pacman.lives; i++) {
@@ -152,7 +153,7 @@ public class UI {
 			if (introTimer > 3) {
 				// SPEEDY / PINKY (PINK)
 				g2.setColor(Color.pink);
-				//g2.drawImage(engine.pGhost.right1, 100, 280, ghostSize, ghostSize, null);
+				g2.drawImage(engine.pGhost.right1, 100, 280, ghostSize, ghostSize, null);
 				g2.drawString("- SPEEDY", 170, 310);
 				g2.drawString("\"PINKY\"", 400, 310);
 			}
@@ -160,7 +161,7 @@ public class UI {
 			if (introTimer > 4) {
 				// BASHFUL / INKY (CYAN/Light Blue)
 				g2.setColor(Color.cyan);
-				//g2.drawImage(engine.bGhost.right1, 100, 380, ghostSize, ghostSize, null);
+				g2.drawImage(engine.bGhost.right1, 100, 380, ghostSize, ghostSize, null);
 				g2.drawString("- BASHFUL", 170, 410);
 				g2.drawString("\"INKY\"", 400, 410);
 			}
@@ -168,17 +169,17 @@ public class UI {
 			if (introTimer > 5) {
 				// POKEY / CLYDE (Orange (lighter))
 				g2.setColor(Color.orange);
-				//g2.drawImage(engine.oGhost.right1, 100, 480, ghostSize, ghostSize, null);
+				g2.drawImage(engine.oGhost.right1, 100, 480, ghostSize, ghostSize, null);
 				g2.drawString("- POKEY", 170, 510);
 				g2.drawString("\"CLYDE\"", 400, 510);
 			}
 			if (introTimer > 6) {
 				// Pacman and ghosts			
 				g2.drawImage(engine.rGhost.left1, rX, 560, 32, 32, null);
-				//g2.drawImage(engine.pGhost.left1, pX, 560, 32, 32, null);
-				//g2.drawImage(engine.bGhost.left1, bX, 560, 32, 32, null);
-				//g2.drawImage(engine.oGhost.left1, oX, 560, 32, 32, null);
-				//g2.drawImage(engine.player.left1, pManX, 560, null);
+				g2.drawImage(engine.pGhost.left1, pX, 560, 32, 32, null);
+				g2.drawImage(engine.bGhost.left1, bX, 560, 32, 32, null);
+				g2.drawImage(engine.oGhost.left1, oX, 560, 32, 32, null);
+				g2.drawImage(engine.pacman.left1, pManX, 560, null);
 
 				pManX -= 2;
 				pX -= 2;

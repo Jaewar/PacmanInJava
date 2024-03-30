@@ -42,6 +42,8 @@ public class InputHandler implements KeyListener {
 		if (engine.gameState == engine.titleState) {
 			if (keyCode == KeyEvent.VK_ENTER) {
 				engine.gameState = engine.playState;
+				// playing 0 in music array (main start theme)
+				engine.playMusic(0);
 			}
 		}
 

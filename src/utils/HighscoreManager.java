@@ -55,6 +55,10 @@ public class HighscoreManager {
 				engine.highScore = Integer.parseInt(s);
 			}
 			
+			if (engine.highScore > 999999) {
+				engine.highScore = 999999;
+			}
+			
 			br.close();
 		} catch (FileNotFoundException e) {
 			// file was not found so we will create with writeScore.
