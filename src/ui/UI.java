@@ -92,7 +92,7 @@ public class UI {
 			g2.setColor(Color.white);
 			
 			g2.drawString("Score: " + engine.score, 25, 50);
-			g2.drawString("HighScore: " + engine.highScore, 300, 50);
+			g2.drawString("HighScore: " + engine.highScore, 250, 50);
 			
 			// player lives
 			int xOffset = 25;

@@ -68,8 +68,12 @@ public class Pacman extends Actor {
 	public void killPacman() {
 		if (lives == 1) {
 			// save highscore
+			engine.hsm.writeScore();
+			
 			engine.setupGame();
 		} else {
+			// save highscore, when application closes forcibly and game hasnt ended high score wont update.
+			engine.hsm.writeScore();
 			resetPacman();
 			lives -=1;
 			engine.gameState = engine.playState;
@@ -212,6 +216,14 @@ public class Pacman extends Actor {
 				this.y = engine.tileSize * 12;
 				break;
 			}
+			
+			if (engine.score > engine.highScore) {
+				engine.highScore = engine.score;
+			}
+			// protecting the UI, if score ends up being this large, this is the final value.
+			if (engine.score > 999999) {
+				engine.score = 999999;
+			}
 
 		}
 		
@@ -223,29 +235,31 @@ public class Pacman extends Actor {
 			} 
 		} 
 		// ghost release conditions
-		if (count < 150) {
-			if (engine.bGhost.canActivate == true) {
-				engine.bGhost.isActive = true;
-				engine.bGhost.setDefaultValues();
-				engine.bGhost.canActivate = false;
-			}
-			if (engine.pGhost.canActivate == true) {
-				engine.pGhost.isActive = true;
-				engine.pGhost.setDefaultValues();
-				engine.pGhost.canActivate = false;
-			}
+		if (count < 170) {
 			if (engine.oGhost.canActivate == true) {
 				engine.oGhost.isActive = true;
 				engine.oGhost.setDefaultValues();
 				engine.oGhost.canActivate = false;
 			}
 		}
-		if (count < 120) {
-			
-		} 
-		if (count < 170) {
+		
+		if (count < 150) {
+			if (engine.bGhost.canActivate == true) {
+				engine.bGhost.isActive = true;
+				engine.bGhost.setDefaultValues();
+				engine.bGhost.canActivate = false;
+			}
 
 		}
+		// fastest ghost released last.
+		if (count < 120) {
+			if (engine.pGhost.canActivate == true) {
+				engine.pGhost.isActive = true;
+				engine.pGhost.setDefaultValues();
+				engine.pGhost.canActivate = false;
+			}
+		} 
+
 		System.out.println(engine.pelletsRemaining);
 		if (engine.pelletsRemaining < 1) {
 			engine.oManager.setObject();
@@ -266,14 +280,23 @@ public class Pacman extends Actor {
 			
 			resetPacman();
 			
+			// 1k score added on level completion.
 			engine.score += 1000;
 			
-			// TODO highscore manager needs implementing.
-			//engine.hsm.writeScore();
+			// setting timer to default value.
+			engine.ui.restartStartTimer();
+			
+			// highscore manager needs implemented.
+			engine.hsm.writeScore();
 		}
 		if (engine.score >= lifeUpScore) { 
-			lifeUpScore += 10000; 
-			lives++; 
+			lifeUpScore += 10000;
+			if (lives >= 5) {
+			 	// 5 lives is the maximum.
+				lives = 5;
+			} else {
+				lives++;
+			}
 		}
 		 
 	}

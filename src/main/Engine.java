@@ -21,6 +21,7 @@ import objects.ObjectManager;
 import objects.SuperObject;
 import tiles.TileManager;
 import ui.UI;
+import utils.HighscoreManager;
 
 /*
  * Author:			Jacob Stewart
@@ -74,6 +75,7 @@ public class Engine extends JPanel implements Runnable {
 	public ObjectManager oManager = new ObjectManager(this);
 	public UI ui = new UI(this);
 	public PathFinder pFinder = new PathFinder(this);
+	public HighscoreManager hsm = new HighscoreManager(this);
 	
 	public SuperObject obj[] = new SuperObject[200];
 	
@@ -118,6 +120,8 @@ public class Engine extends JPanel implements Runnable {
 		bGhost.setDefaultValues();
 		pGhost.setDefaultValues();
 		oGhost.setDefaultValues();
+		
+		hsm.loadScore();
 	}
 
 	@Override
@@ -160,6 +164,7 @@ public class Engine extends JPanel implements Runnable {
 
 		}
 		System.out.println("Thread closed");
+		hsm.writeScore();
 		gameThread = null;
 	}
 	
