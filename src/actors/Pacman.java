@@ -29,7 +29,7 @@ public class Pacman extends Actor {
 	public int lives;
 	public int lifeUpScore = 10000;
 	
-	public boolean isDead = false;
+	public boolean isDead = false, triggerDeathSound = false;
 
 	public Pacman(Engine e, InputHandler inputH) {
 		this.engine = e;
@@ -152,6 +152,11 @@ public class Pacman extends Actor {
 		}
 		} else {
 			engine.gameState = engine.deathState;
+			// death music
+			if (triggerDeathSound == false) {
+				engine.music.playMusic(2);
+				triggerDeathSound = true;
+			}
 			spriteCounter++;
 			if (spriteCounter > 30) {
 				if (spriteNum == 1) {
@@ -178,8 +183,9 @@ public class Pacman extends Actor {
 					spriteNum = 1;
 					
 					engine.ui.restartStartTimer();
-					// playing 0 in music array (main start theme)
-					engine.playMusic(0);
+					triggerDeathSound = false;
+					// playing 0 in music array (main start theme) (2 low sound gain (1-5))
+					engine.se.playMusic(0);
 				}
 				spriteCounter = 0;
 			}
@@ -225,9 +231,7 @@ public class Pacman extends Actor {
 			if (engine.score > 999999) {
 				engine.score = 999999;
 			}
-			// playing 0 in music array (main start theme)
-			engine.playMusic(1);
-
+			engine.se.playSE(1);
 		}
 		
 		  //Possible code to reset objects and player position. 
@@ -262,8 +266,7 @@ public class Pacman extends Actor {
 				engine.pGhost.canActivate = false;
 			}
 		} 
-
-		System.out.println(engine.pelletsRemaining);
+		
 		if (engine.pelletsRemaining < 1) {
 			engine.oManager.setObject();
 			

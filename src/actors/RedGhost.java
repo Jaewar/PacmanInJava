@@ -29,6 +29,8 @@ public class RedGhost extends Actor {
 
 	public int counter = 0;
 	public int runTimer = 0;
+	
+	public boolean sirenPlaying = false;
 
 	public RedGhost(Engine e) {
 		this.engine = e;
@@ -73,6 +75,11 @@ public class RedGhost extends Actor {
 
 	public void update() {
 
+		if (engine.gameState == engine.playState && sirenPlaying == false) {
+			engine.music.playMusic(4);
+			engine.music.loop();
+			sirenPlaying = true;
+		}
 		onPath = true;
 
 		setAction(state);
@@ -218,6 +225,7 @@ public class RedGhost extends Actor {
 			engine.pacman.isDead = true;
 		}
 		if (contactPlayer == true && state == runState) {
+			engine.music.playMusic(3);
 			setDefaultValues();
 			engine.score += 100;
 		}

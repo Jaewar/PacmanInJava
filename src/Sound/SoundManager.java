@@ -1,11 +1,17 @@
 package Sound;
 
+import java.io.IOException;
 import java.net.URL;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.DataLine.Info;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /*
  * Author:			Jacob Stewart
@@ -21,12 +27,20 @@ public class SoundManager {
 	Clip clip;
 	URL soundURL[] = new URL[30];
 	FloatControl fc;
-	public int volumeScale = 5;
+	public int volumeScale = 1;
 	float volume;
+	
+	AudioFormat format;
+	Info info;
 
 	public SoundManager() {
 		soundURL[0] = getClass().getResource("/sounds/pacman_beginning.wav");
-		soundURL[1] = getClass().getResource("/sounds/eat_item.wav");
+		soundURL[1] = getClass().getResource("/sounds/pacman_chomp.wav");
+		soundURL[2] = getClass().getResource("/sounds/pacman_death.wav");
+		soundURL[3] = getClass().getResource("/sounds/pacman_eatghost.wav");
+		soundURL[4] = getClass().getResource("/sounds/siren_1.wav");
+		
+		info = new DataLine.Info(Clip.class, format);
 	}
 
 	public void setFile(int i) {
@@ -43,6 +57,34 @@ public class SoundManager {
 
 	public void play() {
 		clip.start();
+	}
+	
+	public void playMusic(int i) {
+		setFile(i);
+		play();	
+	}
+
+	public void playSE(int i) {
+		// method created to play a sound effect without override the previous (I.E
+		// eating pellets)
+		try {
+			if ((clip == null) || (!clip.isActive())) {
+				AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+				clip = (Clip)AudioSystem.getLine(info);
+				clip.open(ais);
+				fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				clip.start();
+			}
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void loop() {
@@ -80,6 +122,5 @@ public class SoundManager {
 
 		fc.setValue(volume);
 	}
-
 
 }

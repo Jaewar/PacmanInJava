@@ -43,7 +43,7 @@ public class InputHandler implements KeyListener {
 			if (keyCode == KeyEvent.VK_ENTER) {
 				engine.gameState = engine.playState;
 				// playing 0 in music array (main start theme)
-				engine.playMusic(0);
+				engine.music.playMusic(0);
 			}
 		}
 
@@ -67,18 +67,12 @@ public class InputHandler implements KeyListener {
 		}
 
 		// DEBUG GAME STATE SWAPPING
-		if (keyCode == KeyEvent.VK_NUMPAD1) {
-			engine.gameState = 1;
-		}
-		if (keyCode == KeyEvent.VK_NUMPAD2) {
-			engine.gameState = 2;
-		}
-		if (keyCode == KeyEvent.VK_NUMPAD3) {
-			engine.gameState = 3;
-		}
-		if (keyCode == KeyEvent.VK_NUMPAD4) {
-			engine.gameState = 4;
-		}
+		/*
+		 * if (keyCode == KeyEvent.VK_NUMPAD1) { engine.gameState = 1; } if (keyCode ==
+		 * KeyEvent.VK_NUMPAD2) { engine.gameState = 2; } if (keyCode ==
+		 * KeyEvent.VK_NUMPAD3) { engine.gameState = 3; } if (keyCode ==
+		 * KeyEvent.VK_NUMPAD4) { engine.gameState = 4; }
+		 */
 
 	}
 

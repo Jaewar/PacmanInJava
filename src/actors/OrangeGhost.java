@@ -249,6 +249,9 @@ public class OrangeGhost extends Actor {
 			engine.pacman.isDead = true;
 		}
 		if (contactPlayer == true && state == runState) {
+			
+			engine.music.playMusic(3);
+			
 			setDefaultValues();
 			engine.score += 100;
 		}

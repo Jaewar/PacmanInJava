@@ -78,6 +78,7 @@ public class Engine extends JPanel implements Runnable {
 	public PathFinder pFinder = new PathFinder(this);
 	public HighscoreManager hsm = new HighscoreManager(this);
 	public SoundManager music = new SoundManager();
+	public SoundManager se = new SoundManager();
 	
 	public SuperObject obj[] = new SuperObject[200];
 	
@@ -229,27 +230,6 @@ public class Engine extends JPanel implements Runnable {
 		// release unnecessary memory after rendering.
 		g2.dispose();
 	}
-	
-	
-	// AUDIO CONTROL
-	public void playMusic(int i) {
-		music.volumeScale = 3;
-		music.setFile(i);
-		music.play();	
-	}
-	
-	public void stopMusic() {
-		
-	}
-	
-	public void playSoundEffect(int i) {
-		
-	}
-	
-	public void stopSoundEffect() {
-		
-	}
-	// AUDIO CONTROL
 	
 	
 	
