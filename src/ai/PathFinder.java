@@ -14,7 +14,7 @@ import main.Engine;
  */
 
 public class PathFinder {
-	
+
 	Engine gp;
 	Node[][] node;
 	ArrayList<Node> openList = new ArrayList<>();

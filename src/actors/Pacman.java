@@ -1,6 +1,5 @@
 package actors;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -25,17 +24,17 @@ public class Pacman extends Actor {
 
 	private Engine engine;
 	private InputHandler inputH;
-	
+
 	public int lives;
 	public int lifeUpScore = 10000;
-	
+
 	public boolean isDead = false, triggerDeathSound = false;
 
 	public Pacman(Engine e, InputHandler inputH) {
 		this.engine = e;
 		this.inputH = inputH;
 
-		hitbox = new Rectangle(8,8,8,8);
+		hitbox = new Rectangle(8, 8, 8, 8);
 
 		// recording default hitbox location
 		hitboxDefaultX = hitbox.x;
@@ -43,7 +42,7 @@ public class Pacman extends Actor {
 
 		setDefaultValues();
 		getPlayerImage();
-		
+
 		lives = 3;
 
 	}
@@ -52,29 +51,30 @@ public class Pacman extends Actor {
 		resetPacman();
 		lives = 3;
 	}
-	
+
 	public void resetPacman() {
 		x = engine.tileSize * 9;
 		y = engine.tileSize * 18;
-		
+
 		isDead = false;
-		
+
 		speed = 2;
 		direction = "left";
 		engine.inputH.resetKeys();
 	}
-	
+
 	public void killPacman() {
 		if (lives == 1) {
 			// save highscore
 			engine.hsm.writeScore();
-			
+
 			engine.setupGame();
 		} else {
-			// save highscore, when application closes forcibly and game hasnt ended high score wont update.
+			// save highscore, when application closes forcibly and game hasnt ended high
+			// score wont update.
 			engine.hsm.writeScore();
 			resetPacman();
-			lives -=1;
+			lives -= 1;
 			engine.gameState = engine.playState;
 		}
 	}
@@ -107,26 +107,26 @@ public class Pacman extends Actor {
 
 	public void update() {
 		if (isDead == false) {
-		if (inputH.upPressed == true || inputH.downPressed == true || inputH.leftPressed == true
-				|| inputH.rightPressed == true) {
-			// player position and movement
-			if (inputH.upPressed == true) {
-				direction = "up";
-			} else if (inputH.downPressed == true) {
-				direction = "down";
-			} else if (inputH.leftPressed == true) {
-				direction = "left";
-			} else if (inputH.rightPressed == true) {
-				direction = "right";
-			}
+			if (inputH.upPressed == true || inputH.downPressed == true || inputH.leftPressed == true
+					|| inputH.rightPressed == true) {
+				// player position and movement
+				if (inputH.upPressed == true) {
+					direction = "up";
+				} else if (inputH.downPressed == true) {
+					direction = "down";
+				} else if (inputH.leftPressed == true) {
+					direction = "left";
+				} else if (inputH.rightPressed == true) {
+					direction = "right";
+				}
 
-			colliding = false;
-			engine.cManager.checkTiles(this);
-			
-			int objIndex = engine.cManager.checkObject(this, true);
-			pickUpObject(objIndex);
-			
-			// Adjusting x and y pos based on speed.
+				colliding = false;
+				engine.cManager.checkTiles(this);
+
+				int objIndex = engine.cManager.checkObject(this, true);
+				pickUpObject(objIndex);
+
+				// Adjusting x and y pos based on speed.
 			// @formatter:off
 			if (colliding == false) {
 				switch (direction) {
@@ -137,19 +137,19 @@ public class Pacman extends Actor {
 				}
 			}
 			// @formatter:on
-		}
-		// swapping spriteNum, triggering a different image to render (animating)
-		spriteCounter++;
-		if (spriteCounter > 8) {
-			if (spriteNum == 1) {
-				spriteNum = 2;
-			} else if (spriteNum == 2) {
-				spriteNum = 3;
-			} else if (spriteNum == 3) {
-				spriteNum = 1;
 			}
-			spriteCounter = 0;
-		}
+			// swapping spriteNum, triggering a different image to render (animating)
+			spriteCounter++;
+			if (spriteCounter > 8) {
+				if (spriteNum == 1) {
+					spriteNum = 2;
+				} else if (spriteNum == 2) {
+					spriteNum = 3;
+				} else if (spriteNum == 3) {
+					spriteNum = 1;
+				}
+				spriteCounter = 0;
+			}
 		} else {
 			engine.gameState = engine.deathState;
 			// death music
@@ -163,35 +163,35 @@ public class Pacman extends Actor {
 					spriteNum = 2;
 				} else if (spriteNum == 2) {
 					spriteNum = 3;
-				} else if (spriteNum == 3) {		
+				} else if (spriteNum == 3) {
 					spriteNum = 4;
 				} else if (spriteNum == 4) {
 					killPacman();
 					engine.rGhost.setDefaultValues();
-					
+
 					engine.bGhost.canActivate = true;
 					engine.bGhost.isActive = false;
 					engine.bGhost.setDefaultValues();
-					
+
 					engine.pGhost.canActivate = true;
 					engine.pGhost.isActive = false;
 					engine.pGhost.setDefaultValues();
-					
+
 					engine.oGhost.canActivate = true;
 					engine.oGhost.isActive = false;
 					engine.oGhost.setDefaultValues();
 					spriteNum = 1;
-					
+
 					engine.ui.restartStartTimer();
 					triggerDeathSound = false;
-					// playing 0 in music array (main start theme) (2 low sound gain (1-5))
+					// playing 0 in music array (main start theme)
 					engine.se.playMusic(0);
 				}
 				spriteCounter = 0;
 			}
 		}
 	}
-	
+
 	private void pickUpObject(int i) {
 		if (i != 999) {
 
@@ -199,8 +199,8 @@ public class Pacman extends Actor {
 
 			switch (objectName) {
 			case "Pellet":
-				//engine.stopSE();
-				//engine.playSE(1);
+				// engine.stopSE();
+				// engine.playSE(1);
 				engine.score += 10;
 				engine.obj[i] = null;
 				engine.pelletsRemaining -= 1;
@@ -223,34 +223,35 @@ public class Pacman extends Actor {
 				this.y = engine.tileSize * 12;
 				break;
 			}
-			
+
 			if (engine.score > engine.highScore) {
 				engine.highScore = engine.score;
 			}
-			// protecting the UI, if score ends up being this large, this is the final value.
+			// protecting the UI, if score ends up being this large, this is the final
+			// value.
 			if (engine.score > 999999) {
 				engine.score = 999999;
 			}
 			engine.se.playSE(1);
 		}
-		
-		  //Possible code to reset objects and player position. 
-		int count = 0; 
-		for (int j= 0; j < engine.obj.length; j++) { 
-			if (engine.obj[j] != null) { 
-				count++; 
-			} 
-		} 
+
+		// Possible code to reset objects and player position.
+		int count = 0;
+		for (int j = 0; j < engine.obj.length; j++) {
+			if (engine.obj[j] != null) {
+				count++;
+			}
+		}
 		// ghost release conditions
-		if (count < 170) {
+		if (count < 130) {
 			if (engine.oGhost.canActivate == true) {
 				engine.oGhost.isActive = true;
 				engine.oGhost.setDefaultValues();
 				engine.oGhost.canActivate = false;
 			}
 		}
-		
-		if (count < 150) {
+
+		if (count < 100) {
 			if (engine.bGhost.canActivate == true) {
 				engine.bGhost.isActive = true;
 				engine.bGhost.setDefaultValues();
@@ -259,58 +260,59 @@ public class Pacman extends Actor {
 
 		}
 		// fastest ghost released last.
-		if (count < 120) {
+		if (count < 70) {
 			if (engine.pGhost.canActivate == true) {
 				engine.pGhost.isActive = true;
 				engine.pGhost.setDefaultValues();
 				engine.pGhost.canActivate = false;
 			}
-		} 
-		
+		}
+
 		if (engine.pelletsRemaining < 1) {
 			engine.oManager.setObject();
-			
+
 			engine.rGhost.setDefaultValues();
-			
+
 			engine.bGhost.isActive = false;
 			engine.bGhost.canActivate = true;
 			engine.bGhost.setDefaultValues();
-			
+
 			engine.pGhost.isActive = false;
 			engine.pGhost.canActivate = true;
 			engine.pGhost.setDefaultValues();
-			
+
 			engine.oGhost.isActive = false;
 			engine.oGhost.canActivate = true;
 			engine.oGhost.setDefaultValues();
-			
+
 			resetPacman();
-			
+
 			// 1k score added on level completion.
 			engine.score += 1000;
-			
+
 			// setting timer to default value.
 			engine.ui.restartStartTimer();
-			
+			engine.se.playMusic(0);
+
 			// highscore manager needs implemented.
 			engine.hsm.writeScore();
 		}
-		if (engine.score >= lifeUpScore) { 
+		if (engine.score >= lifeUpScore) {
 			lifeUpScore += 10000;
 			if (lives >= 5) {
-			 	// 5 lives is the maximum.
+				// 5 lives is the maximum.
 				lives = 5;
 			} else {
 				lives++;
 			}
 		}
-		 
+
 	}
 
 	public void draw(Graphics2D g2) {
 
 		BufferedImage image = null;
-		
+
 		// @formatter:off
 		// Swapping Pacman image based on current sprite num.
 		if (isDead == false) {
@@ -347,9 +349,6 @@ public class Pacman extends Actor {
 		// @formatter:on
 
 		g2.drawImage(image, x, y, null);
-
-		g2.setColor(Color.red);
-		g2.drawRect(x + hitbox.x, y + hitbox.y, hitbox.width, hitbox.height);
 
 	}
 

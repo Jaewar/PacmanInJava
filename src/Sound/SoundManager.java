@@ -92,7 +92,9 @@ public class SoundManager {
 	}
 
 	public void stop() {
+		if (clip != null || clip.isActive()) {
 		clip.stop();
+		}
 	}
 
 	public void checkVolume() {

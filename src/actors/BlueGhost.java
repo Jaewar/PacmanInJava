@@ -33,7 +33,7 @@ public class BlueGhost extends Actor {
 	// Variables for releasing ghost at specific timing
 	public boolean isActive = false;
 	public boolean canActivate = true;
-	
+
 	public BlueGhost(Engine e) {
 		this.engine = e;
 		// hitbox is 1 pixel smaller (AI should be able to perform perfect movement)
@@ -51,11 +51,11 @@ public class BlueGhost extends Actor {
 	public void setDefaultValues() {
 		// 9 * 10 (default ghost starting position outside of box).
 		if (isActive) {
-		x = engine.tileSize * 9;
-		y = engine.tileSize * 10;
-		speed = 1;
-		state = chaseState;
-		direction = "left";
+			x = engine.tileSize * 9;
+			y = engine.tileSize * 10;
+			speed = 1;
+			state = chaseState;
+			direction = "left";
 		} else {
 			x = engine.tileSize * 8;
 			y = engine.tileSize * 12;
@@ -153,7 +153,7 @@ public class BlueGhost extends Actor {
 	}
 
 	public int getGoalRow(Actor target) {
-		int goalRow = ((target.y + target.hitbox.y) / engine.tileSize) -1;
+		int goalRow = ((target.y + target.hitbox.y) / engine.tileSize) - 1;
 		return goalRow;
 	}
 
@@ -231,9 +231,9 @@ public class BlueGhost extends Actor {
 			engine.pacman.isDead = true;
 		}
 		if (contactPlayer == true && state == runState) {
-
+			engine.se.stop();
 			engine.music.playMusic(3);
-			
+
 			setDefaultValues();
 			engine.score += 100;
 		}
@@ -318,7 +318,6 @@ public class BlueGhost extends Actor {
 		}
 
 		g2.drawImage(image, x, y, engine.tileSize, engine.tileSize, null);
-		g2.drawRect(x + hitbox.x, y + hitbox.y, hitbox.width, hitbox.height);
 	}
-	
+
 }

@@ -25,7 +25,8 @@ public class UI {
 	private int introTimer = 0, counter = 0;
 	
 	// timers for start countdown
-	private int startTimer = 4, startCounter = 0;
+	public int startTimer = 4;
+	private int startCounter = 0;
 	
 	// pacman and ghost starting positions for run across animations.
 	private int pManX = 600, rX = 650, bX = 700, pX = 750, oX = 800;

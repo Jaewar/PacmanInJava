@@ -13,19 +13,20 @@ import java.awt.image.BufferedImage;
 
 public abstract class Actor {
 
-	public int x, y, speed;
-	
+	public int x, y;
+
+	public int speed;
+
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, idle1, run1, run2;
 	public String direction;
-	
+
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
-	
+
 	public Rectangle hitbox;
-	
+
 	public int hitboxDefaultX, hitboxDefaultY;
-	
+
 	public boolean colliding = false;
-	
-	
+
 }

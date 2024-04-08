@@ -33,37 +33,37 @@ import utils.HighscoreManager;
  * 		and controlling the update and render methods.
  */
 
-
 @SuppressWarnings("serial")
 public class Engine extends JPanel implements Runnable {
 
 	// TODO JPanel Settings
 	public final int tileSize = 32;
-	
+
 	// Max Tiles needed to support UI and Map.
-	public final int maxScreenCol = 19; 
+	public final int maxScreenCol = 19;
 	public final int maxScreenRow = 24;
-	
+
 	// 608x868 pixels
 	private final int screenWidth = 608; // tileSize * maxScreenCol
 	private final int screenHeight = 868; // tileSize * maxScreenRow
-	
+
 	private final int FPS = 60;
-	
+
 	// Game States
 	public int gameState;
 	public final int titleState = 1;
 	public final int playState = 2;
 	public final int pauseState = 3;
 	public final int deathState = 4;
-	
+
 	public boolean startCountdown = true;
-	
+	public boolean playSiren = false;
+
 	// Scoring
 	public int score;
 	public int highScore;
 	public int pelletsRemaining;
-	
+
 	// INSTANCES
 	public InputHandler inputH = new InputHandler(this);
 	public Pacman pacman = new Pacman(this, inputH);
@@ -79,23 +79,24 @@ public class Engine extends JPanel implements Runnable {
 	public HighscoreManager hsm = new HighscoreManager(this);
 	public SoundManager music = new SoundManager();
 	public SoundManager se = new SoundManager();
-	
+	public SoundManager siren = new SoundManager();
+
 	public SuperObject obj[] = new SuperObject[200];
-	
+
 	private Thread gameThread;
-	
+
 	public BufferedImage iconImage;
-	
+
 	public Engine() {
 		// JPANEL SETTINGS
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		// Improved rendering time
 		this.setDoubleBuffered(true);
-		
+
 		this.addKeyListener(inputH);
 		this.setFocusable(true);
-		
+
 		// setting icon image
 		try {
 			iconImage = ImageIO.read(getClass().getResource("/player/" + "pacmanLeft1" + ".png"));
@@ -103,30 +104,29 @@ public class Engine extends JPanel implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void startThread() {
 		gameThread = new Thread(this);
 		gameThread.start(); // calls run() method
 	}
-	
+
 	public void setupGame() {
 		gameState = titleState;
-		
+
 		score = 0;
-		
+
 		ui.resetUI();
-		
+
 		oManager.setObject();
-		
+
 		pacman.setDefaultValues();
 		rGhost.setDefaultValues();
 		bGhost.setDefaultValues();
 		pGhost.setDefaultValues();
 		oGhost.setDefaultValues();
-		
+
 		hsm.loadScore();
-		
-		
+
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class Engine extends JPanel implements Runnable {
 		double delta = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
-		
+
 		// FPS Check
 		long timer = 0;
 		int drawCount = 0;
@@ -172,65 +172,68 @@ public class Engine extends JPanel implements Runnable {
 		hsm.writeScore();
 		gameThread = null;
 	}
-	
+
 	public void update() {
-		switch(gameState) {
+		switch (gameState) {
 		case titleState:
 			ui.update();
 			break;
 		case playState:
 			ui.update();
 			if (startCountdown == false) {
-			pacman.update();
-			rGhost.update();
-			bGhost.update();
-			pGhost.update();
-			oGhost.update();
+				pacman.update();
+				rGhost.update();
+				bGhost.update();
+				pGhost.update();
+				oGhost.update();
+			}
+			if (playSiren == false) {
+				siren.playMusic(4);
+				siren.loop();
+				playSiren = true;
 			}
 			break;
 		case pauseState:
-			//System.out.println("Pause State 2");
+			// System.out.println("Pause State 2");
 			break;
 		case deathState:
 			pacman.update();
 			break;
 		}
 	}
-	
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// Converting to Graphics2D which includes more functionality then Graphics.
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		// TODO Depending on Game State render Actors and UI.
 		// TITLE SCREEN
 		if (gameState == titleState) {
 			ui.draw(g2);
 		} else {
-		// TILES
-		tileM.draw(g2);
-		
-		// OBJECTS
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				obj[i].draw(g2, this);
+			// TILES
+			tileM.draw(g2);
+
+			// OBJECTS
+			for (int i = 0; i < obj.length; i++) {
+				if (obj[i] != null) {
+					obj[i].draw(g2, this);
+				}
 			}
-		}
-		
-		// ACTORS
-		pacman.draw(g2);
-		rGhost.draw(g2);
-		bGhost.draw(g2);
-		pGhost.draw(g2);
-		oGhost.draw(g2);
-		
-		// UI
-		ui.draw(g2);
+
+			// ACTORS
+			pacman.draw(g2);
+			rGhost.draw(g2);
+			bGhost.draw(g2);
+			pGhost.draw(g2);
+			oGhost.draw(g2);
+
+			// UI
+			ui.draw(g2);
 		}
 		// release unnecessary memory after rendering.
 		g2.dispose();
 	}
-	
-	
-	
+
 }

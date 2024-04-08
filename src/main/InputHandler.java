@@ -39,7 +39,7 @@ public class InputHandler implements KeyListener {
 		int keyCode = e.getKeyCode();
 
 		// TITLE STATE
-		if (engine.gameState == engine.titleState) {
+		if (engine.gameState == engine.titleState && engine.ui.runIntro == false) {
 			if (keyCode == KeyEvent.VK_ENTER) {
 				engine.gameState = engine.playState;
 				// playing 0 in music array (main start theme)
@@ -65,15 +65,6 @@ public class InputHandler implements KeyListener {
 				rightPressed = true;
 			}
 		}
-
-		// DEBUG GAME STATE SWAPPING
-		/*
-		 * if (keyCode == KeyEvent.VK_NUMPAD1) { engine.gameState = 1; } if (keyCode ==
-		 * KeyEvent.VK_NUMPAD2) { engine.gameState = 2; } if (keyCode ==
-		 * KeyEvent.VK_NUMPAD3) { engine.gameState = 3; } if (keyCode ==
-		 * KeyEvent.VK_NUMPAD4) { engine.gameState = 4; }
-		 */
-
 	}
 
 	// In event that key presses need to be reset to default false value.
