@@ -137,12 +137,10 @@ public class UI {
 			g2.drawString("HIGH SCORE", 220, 30);
 			g2.drawString("" + engine.highScore, 280, 60);
 			g2.drawString("2UP", 450, 30);
-
 			// CHAR / NICKNAME (WHITE)
 			if (introTimer >= 1) {
 				g2.drawString("CHARACTER  /  NICKNAME", 170, 150);
 			}
-
 			// SHADOW / BLINKY (RED)
 			if (introTimer > 2) {
 				g2.setColor(Color.red);
@@ -150,7 +148,6 @@ public class UI {
 				g2.drawString("- SHADOW", 170, 210);
 				g2.drawString("\"BLINKY\"", 400, 210);
 			}
-
 			if (introTimer > 3) {
 				// SPEEDY / PINKY (PINK)
 				g2.setColor(Color.pink);
@@ -158,7 +155,6 @@ public class UI {
 				g2.drawString("- SPEEDY", 170, 310);
 				g2.drawString("\"PINKY\"", 400, 310);
 			}
-
 			if (introTimer > 4) {
 				// BASHFUL / INKY (CYAN/Light Blue)
 				g2.setColor(Color.cyan);
@@ -166,7 +162,6 @@ public class UI {
 				g2.drawString("- BASHFUL", 170, 410);
 				g2.drawString("\"INKY\"", 400, 410);
 			}
-
 			if (introTimer > 5) {
 				// POKEY / CLYDE (Orange (lighter))
 				g2.setColor(Color.orange);
@@ -188,16 +183,13 @@ public class UI {
 				oX -= 2;
 				rX -= 2;
 			}
-
 			// point values.
 			g2.setColor(Color.white);
 			// small orb
 			if (engine.obj[0] == null) {
-				
 			} else {
 			g2.drawImage(engine.obj[0].image, 250, 650, null);
 			g2.drawString("10 PTS", 300, 665);
-
 			// big orb
 			g2.drawImage(engine.obj[0].image, 242, 700, 32, 32, null);
 			g2.drawString("50 PTS", 300, 725);

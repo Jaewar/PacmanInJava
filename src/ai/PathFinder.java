@@ -15,7 +15,7 @@ import main.Engine;
 
 public class PathFinder {
 
-	Engine gp;
+	Engine engine;
 	Node[][] node;
 	ArrayList<Node> openList = new ArrayList<>();
 	public ArrayList<Node> pathList = new ArrayList<>();
@@ -24,21 +24,21 @@ public class PathFinder {
 	int step = 0;
 
 	public PathFinder(Engine gp) {
-		this.gp = gp;
+		this.engine = gp;
 		instantiateNodes();
 	}
 
 	public void instantiateNodes() {
-		node = new Node[gp.maxScreenCol][gp.maxScreenRow];
+		node = new Node[engine.maxScreenCol][engine.maxScreenRow];
 
 		int col = 0;
 		int row = 0;
 
-		while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+		while (col < engine.maxScreenCol && row < engine.maxScreenRow) {
 			node[col][row] = new Node(col, row);
 
 			col++;
-			if (col == gp.maxScreenCol) {
+			if (col == engine.maxScreenCol) {
 				col = 0;
 				row++;
 			}
@@ -49,14 +49,14 @@ public class PathFinder {
 		int col = 0;
 		int row = 0;
 
-		while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+		while (col < engine.maxScreenCol && row < engine.maxScreenRow) {
 			// reset open, checked and solid state
 			node[col][row].open = false;
 			node[col][row].checked = false;
 			node[col][row].solid = false;
 
 			col++;
-			if (col == gp.maxScreenCol) {
+			if (col == engine.maxScreenCol) {
 				col = 0;
 				row++;
 			}
@@ -81,18 +81,18 @@ public class PathFinder {
 		int col = 0;
 		int row = 0;
 
-		while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+		while (col < engine.maxScreenCol && row < engine.maxScreenRow) {
 			// SET SOLID NODE
 			// CHECK TILES
-			int tileNum = gp.tileM.mapTileNum[col][row];
-			if (gp.tileM.tile[tileNum].collision == true) {
+			int tileNum = engine.tileM.mapTileNum[col][row];
+			if (engine.tileM.tile[tileNum].collision == true) {
 				node[col][row].solid = true;
 			}
 			// set cost
 			getCost(node[col][row]);
 
 			col++;
-			if (col == gp.maxScreenCol) {
+			if (col == engine.maxScreenCol) {
 				col = 0;
 				row++;
 			}
@@ -132,12 +132,12 @@ public class PathFinder {
 				openNode(node[col - 1][row]);
 			}
 			// down node
-			if (row + 1 < gp.maxScreenRow) {
+			if (row + 1 < engine.maxScreenRow) {
 				openNode(node[col][row + 1]);
 			}
 
 			// right node
-			if (col + 1 < gp.maxScreenCol) {
+			if (col + 1 < engine.maxScreenCol) {
 				openNode(node[col + 1][row]);
 			}
 
